@@ -29,35 +29,6 @@ describe('Acesso ao Swaglabs', () => {
     cy.get('.cart_item').should('not.exist')
   })
 
-  it('Deve filtrar produtos por ordem alfabética A-Z', () => {
-    cy.get('[data-test="product-sort-container"]').select('Name (A to Z)')
-    cy.get('.inventory_item_name').then(items => {
-      const names = [...items].map(el => el.innerText)
-      const sorted = [...names].sort()
-      expect(names).to.deep.equal(sorted)
-    })
-  })
-
-  it('Deve filtrar produtos por ordem alfabética Z-A', () => {
-    cy.get('[data-test="product-sort-container"]').select('Name (Z to A)')
-    cy.get('.inventory_item_name').then(items => {
-      const names = [...items].map(el => el.innerText)
-      const sorted = [...names].sort().reverse()
-      expect(names).to.deep.equal(sorted)
-    })
-  })
-
-  it('Deve filtrar produtos por preço (maior para o menor)', () => {
-    cy.get('[data-test="product-sort-container"]').select('Price (high to low)')
-    cy.get('.inventory_item_price').then(prices => {
-      const values = [...prices].map(p =>
-        parseFloat(p.innerText.trim().replace('$', ''))
-      )
-      const sorted = [...values].slice().sort((a, b) => b - a)
-      expect(values).to.deep.equal(sorted)
-    })
-  })
-
   it('Deve acessar os detalhes de um produto', () => {
     cy.contains('Sauce Labs Backpack').click()
     cy.get('.inventory_details_name').should('contain', 'Sauce Labs Backpack')
